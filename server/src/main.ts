@@ -3,9 +3,9 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import e from "express";
 import { serverInfo } from "./serverInfo";
 import * as IMAP from "./IMAP";
-// import * as SMTP from "./SMTP";
-// import * as Contacts from "./Contacts";
-// import { IContact } from "./Contacts";
+import * as SMTP from "./SMTP";
+import * as Contacts from "./Contacts";
+import { IContact } from "./Contacts";
 
 const app: Express = express();
 
@@ -95,6 +95,28 @@ app.post("/messages", async (inRequest: Request, inResponse: Response) => {
     const smtpWorker: SMTP.Worker = new SMTP.Worker(serverInfo);
     await smtpWorker.sendMessage(inRequest.body);
     inResponse.send("ok");
+  } catch (inError) {
+    inResponse.json("error");
+  }
+});
+
+// List contacts
+app.get("/contacts", async (inRequest: Request, inResponse: Response) => {
+  try {
+    const contactsWorker: Contacts.Worker = new Contacts.Worker();
+    const contacts: IContact[] = await contactsWorker.listContacts();
+    inResponse.json(contacts);
+  } catch (inError) {
+    inResponse.send("error");
+  }
+});
+
+// Create contact
+app.post("/contacts", async (inRequest: Request, inResponse: Response) => {
+  try {
+    const contactsWorker: Contacts.Worker = new Contacts.Worker();
+    const contact: IContact = await contactsWorker.addContact(inRequest.body);
+    inResponse.json(contact);
   } catch (inError) {
     inResponse.json("error");
   }
