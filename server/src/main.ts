@@ -121,3 +121,17 @@ app.post("/contacts", async (inRequest: Request, inResponse: Response) => {
     inResponse.json("error");
   }
 });
+
+// Delete contact
+app.delete(
+  "/contacts/:id",
+  async (inRequest: Request, inResponse: Response) => {
+    try {
+      const contactsWorker: Contacts.Worker = new Contacts.Worker();
+      await contactsWorker.deleteContact(inRequest.params.id);
+      inResponse.send("ok");
+    } catch (inError) {
+      inResponse.send("error");
+    }
+  }
+);
