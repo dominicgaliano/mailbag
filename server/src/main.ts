@@ -37,3 +37,18 @@ app.get("/mailboxes", async (inRequest: Request, inResponse: Response) => {
     inResponse.send("error");
   }
 });
+
+app.get(
+  "/mailboxes/:mailbox",
+  async (inRequest: Request, inResponse: Response) => {
+    try {
+      const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
+      const messages: IMAP.IMessage[] = await imapWorker.listMessages({
+        mailbox: inRequest.params.mailbox,
+      });
+      inResponse.json(messages);
+    } catch (inError) {
+      inResponse.json("error");
+    }
+  }
+);
