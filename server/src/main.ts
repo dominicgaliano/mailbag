@@ -28,6 +28,7 @@ app.use(function (
   inNext();
 });
 
+// List mailboxes
 app.get("/mailboxes", async (inRequest: Request, inResponse: Response) => {
   try {
     const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
@@ -38,6 +39,7 @@ app.get("/mailboxes", async (inRequest: Request, inResponse: Response) => {
   }
 });
 
+// List messages
 app.get(
   "/mailboxes/:mailbox",
   async (inRequest: Request, inResponse: Response) => {
@@ -52,3 +54,39 @@ app.get(
     }
   }
 );
+
+// Get a message
+app.get(
+  "/messages/:mailbox/:id",
+  async (inRequest: Request, inResponse: Response) => {
+    try {
+      const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
+      const messageBody: string = await imapWorker.getMessageBody({
+        mailbox: inRequest.params.mailbox,
+        id: parseInt(inRequest.params.id, 10),
+      });
+      inResponse.send(messageBody);
+    } catch (inError) {
+      inResponse.json("error");
+    }
+  }
+);
+
+// Delete a message
+app.delete(
+  "/messages/:mailbox/:id",
+  async (inRequest: Request, inResponse: Response) => {
+    try {
+      const imapWorker: IMAP.Worker = new IMAP.Worker(serverInfo);
+      await imapWorker.deleteMessage({
+        mailbox: inRequest.params.mailbox,
+        id: parseInt(inRequest.params.id, 10),
+      });
+      inResponse.send("ok");
+    } catch (inError) {
+      inResponse.json("error");
+    }
+  }
+);
+
+// Send a message
