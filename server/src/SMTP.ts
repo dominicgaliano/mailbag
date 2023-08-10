@@ -28,7 +28,7 @@ export class Worker {
             inReject(inError);
           } else {
             console.log("SMTP.Worker.sendMessage(): Ok", inInfo);
-            inResolve("sent");
+            inResolve("sent"); // FIXME: pick a better return string
           }
         }
       );
