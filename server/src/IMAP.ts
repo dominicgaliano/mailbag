@@ -20,10 +20,27 @@ export interface IMailbox {
   path: string;
 }
 
+// Disable certification validation
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 export class Worker {
   private static serverInfo: IServerInfo;
   constructor(inServerInfo: IServerInfo) {
     Worker.serverInfo = inServerInfo;
+  }
+
+  private async connectToServer(): Promise<any> {
+    const client: any = new ImapClient.default(
+      Worker.serverInfo.imap.host,
+      Worker.serverInfo.imap.port,
+      { auth: Worker.serverInfo.imap.auth }
+    );
+    client.log_level = client.LOG_LEVEL_NONE;
+    client.onerror = (inError: Error) => {
+      console.log("IMAP.Worker.connectToServer(): Connection error", inError);
+    };
+    await client.connect();
+    return client;
   }
 
   public listMailboxes() {
