@@ -134,3 +134,8 @@ app.delete(
     }
   }
 );
+
+// start app listening
+app.listen(3000, () => {
+  console.log("MailBag server open for requests");
+});
