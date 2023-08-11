@@ -43,12 +43,49 @@ export class Worker {
     return client;
   }
 
-  public listMailboxes() {
-    throw new Error("Method not implemented.");
+  public async listMailboxes(): Promise<IMailbox[]> {
+    const client: any = await this.connectToServer();
+    const mailboxes: any = await client.listMailboxes();
+    await client.close();
+
+    const finalMailboxes: IMailbox[] = [];
+    const iterateChildren: Function = (inArray: any[]): void => {
+      inArray.forEach((inValue: any) => {
+        finalMailboxes.push({
+          name: inValue.name,
+          path: inValue.path,
+        });
+        iterateChildren(inValue.children);
+      });
+    };
+    iterateChildren(mailboxes.children);
+
+    return finalMailboxes;
   }
 
-  public listMessages(placeholder: ICallOptions) {
-    throw new Error("Method not implemented.");
+  public async listMessages(inCallOptions: ICallOptions): Promise<IMessage[]> {
+    const client: any = await this.connectToServer();
+    const mailbox: any = await client.selectMailbox(inCallOptions.mailbox);
+    if (mailbox.exists === 0) {
+      await client.close();
+      return [];
+    }
+    const messages: any[] = await client.listMessages(
+      inCallOptions.mailbox,
+      "1:*",
+      ["uid", "envelope"]
+    );
+    await client.close();
+    const finalMessages: IMessage[] = messages.map((inValue: any) => {
+      return {
+        id: inValue.uid,
+        date: inValue.envelope.date,
+        to: inValue.envelope.to[0].address,
+        from: inValue.envelope.from[0].address,
+        subject: inValue.envelope.subject,
+      };
+    });
+    return finalMessages;
   }
 
   public getMessageBody(placeholder: ICallOptions) {
