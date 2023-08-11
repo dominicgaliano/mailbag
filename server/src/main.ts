@@ -1,6 +1,5 @@
 import path from "path";
 import express, { Express, NextFunction, Request, Response } from "express";
-import e from "express";
 import { serverInfo } from "./serverInfo";
 import * as IMAP from "./IMAP";
 import * as SMTP from "./SMTP";
