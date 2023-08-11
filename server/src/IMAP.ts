@@ -29,6 +29,11 @@ export class Worker {
     Worker.serverInfo = inServerInfo;
   }
 
+  /**
+   * Connects to the IMAP server
+   *
+   * @returns A promise that eventually resolves to an ImapClient instance
+   */
   private async connectToServer(): Promise<any> {
     const client: any = new ImapClient.default(
       Worker.serverInfo.imap.host,
@@ -43,6 +48,11 @@ export class Worker {
     return client;
   }
 
+  /**
+   * Lists mailboxes
+   *
+   * @returns A promise that eventually resolves to an array of mailboxes
+   */
   public async listMailboxes(): Promise<IMailbox[]> {
     const client: any = await this.connectToServer();
     const mailboxes: any = await client.listMailboxes();
@@ -63,6 +73,12 @@ export class Worker {
     return finalMailboxes;
   }
 
+  /**
+   * Lists messages in a mailbox
+   *
+   * @param inCallOptions An object containing a mailbox property
+   * @returns A promise that eventually resolves to an array of messages
+   */
   public async listMessages(inCallOptions: ICallOptions): Promise<IMessage[]> {
     const client: any = await this.connectToServer();
     const mailbox: any = await client.selectMailbox(inCallOptions.mailbox);
@@ -88,11 +104,36 @@ export class Worker {
     return finalMessages;
   }
 
-  public getMessageBody(placeholder: ICallOptions) {
-    throw new Error("Method not implemented.");
+  /**
+   * Gets the plaintext body of a message
+   *
+   * @param inCallOptions An object containing a mailbox and id property
+   * @returns A promise that eventually resolves to a string
+   */
+  public async getMessageBody(inCallOptions: ICallOptions): Promise<string> {
+    const client: any = await this.connectToServer();
+    const messages: any[] = await client.listMessages(
+      inCallOptions.mailbox,
+      inCallOptions.id,
+      ["body[]"],
+      { byUid: true }
+    );
+    const parsed: ParsedMail = await simpleParser(messages[0]["body[]"]);
+    await client.close();
+    return parsed.text || "";
   }
 
-  public deleteMessage(placeholder: ICallOptions) {
-    throw new Error("Method not implemented.");
+  /**
+   * Deletes a message from IMAP server
+   *
+   * @param inCallOptions An object containing a mailbox and id property
+   * @returns A promise that eventually resolves to void
+   */
+  public async deleteMessage(inCallOptions: ICallOptions): Promise<void> {
+    const client: any = await this.connectToServer();
+    await client.deleteMessages(inCallOptions.mailbox, inCallOptions.id, {
+      byUid: true,
+    });
+    await client.close();
   }
 }
