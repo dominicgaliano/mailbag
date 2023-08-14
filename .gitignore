@@ -3,3 +3,4 @@ server/
 server/dist
 client/dist
 server/.env
+.DS_Store
