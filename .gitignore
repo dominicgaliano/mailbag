@@ -2,4 +2,4 @@ client/node_modules
 server/
 server/dist
 client/dist
-.env
+server/.env
