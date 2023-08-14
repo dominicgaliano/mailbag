@@ -135,6 +135,17 @@ app.delete(
   }
 );
 
+// Update contact
+app.put("/contacts/:id", async (inRequest: Request, inResponse: Response) => {
+  try {
+    const contactsWorker: Contacts.Worker = new Contacts.Worker();
+    await contactsWorker.updateContact(inRequest.params.id, inRequest.body);
+    inResponse.send("updated");
+  } catch (inError) {
+    inResponse.send("error");
+  }
+});
+
 require("dotenv").config();
 
 // start app listening

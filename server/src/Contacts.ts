@@ -72,4 +72,24 @@ export class Worker {
       );
     });
   }
+
+  public async updateContact(
+    inId: string,
+    inContact: IContact
+  ): Promise<IContact> {
+    return new Promise((inResolve, inReject) => {
+      this.db.update(
+        { _id: inId },
+        inContact,
+        {},
+        (inError: Error | null, inNumReplaced: number, inUpsert: boolean) => {
+          if (inError) {
+            inReject(inError);
+          } else {
+            inResolve(inContact);
+          }
+        }
+      );
+    });
+  }
 }
