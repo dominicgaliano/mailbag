@@ -135,7 +135,11 @@ app.delete(
   }
 );
 
+require("dotenv").config();
+
 // start app listening
-app.listen(3000, () => {
-  console.log("MailBag server open for requests");
+app.listen(process.env.SERVER_PORT, () => {
+  console.log(
+    `MailBag server open for requests on port ${process.env.SERVER_PORT}`
+  );
 });
