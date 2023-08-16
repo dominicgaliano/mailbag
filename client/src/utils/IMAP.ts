@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from "axios";
 import { config } from "./config";
 
-export interface ICallOptions {
+interface ICallOptions {
   mailbox: string;
   id?: number;
 }
 
-export interface IMessage {
+interface IMessage {
   id: string;
   date: string;
   from: string;
@@ -14,7 +14,7 @@ export interface IMessage {
   body?: string;
 }
 
-export interface IMailbox {
+interface IMailbox {
   name: string;
   path: string;
 }
@@ -27,17 +27,27 @@ export class Worker {
     return response.data;
   }
 
-  public async listMessages(inMailbox: IMailbox): Promise<IMessage[]> {
+  public async listMessages(inMailbox: string): Promise<IMessage[]> {
     const response: AxiosResponse = await axios.get(
       `${config.serverAddress}/mailboxes/${inMailbox}`
     );
+    return response.data;
   }
 
-  public async getMessageBody(inCallOptions: ICallOptions): Promise<string> {
-    throw new Error("Not Implemented");
+  public async getMessageBody(
+    inId: string,
+    inMailbox: string
+  ): Promise<string> {
+    const response: AxiosResponse = await axios.get(
+      `${config.serverAddress}/messages/${inId}/${inMailbox}`
+    );
+    return response.data;
   }
 
-  public async deleteMessage(inCallOptions: ICallOptions): Promise<void> {
-    throw new Error("Not Implemented");
+  public async deleteMessage(inId: string, inMailbox: string): Promise<void> {
+    const response: AxiosResponse = await axios.delete(
+      `${config.serverAddress}/messages/${inMailbox}/${inId}`
+    );
+    return response.data;
   }
 }
