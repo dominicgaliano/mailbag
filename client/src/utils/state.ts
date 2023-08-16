@@ -50,7 +50,7 @@ export default function createState() {
     contactEmail: null,
   });
 
-  /**
+  /*
    * Toggle the please wait modal
    * @param inVisible boolean true to show, false to hide
    */
@@ -61,34 +61,7 @@ export default function createState() {
     }));
   };
 
-  /**
-   * Show contact modal
-   * @param inId contact id
-   * @param inName contact name
-   * @param inEmail contact email
-   */
-  const showContact = function (
-    inId: string,
-    inName: string,
-    inEmail: string
-  ): void {
-    setState((prevState) => ({
-      ...prevState,
-      contactID: inId,
-      contactName: inName,
-      contactEmail: inEmail,
-    }));
-  };
-
-  /**
-   * Show add contact modal
-   */
-  const showAddContact = function (): void {
-    setState((prevState) => ({
-      ...prevState,
-      currentView: "addContact",
-    }));
-  };
+  /* VIEW AREA SETTER FUNCTIONS */
 
   /**
    * Show message modal
@@ -117,6 +90,40 @@ export default function createState() {
     //     messageSubject: inMessage.subject,
     //     messageBody: messageBody,
     //   }));
+  };
+
+  const showComposeMessage = function () {
+    throw new Error("Not implemented");
+  };
+
+  /**
+   * Show contact modal
+   * @param inId contact id
+   * @param inName contact name
+   * @param inEmail contact email
+   */
+  const showContact = function (
+    inId: string,
+    inName: string,
+    inEmail: string
+  ): void {
+    setState((prevState) => ({
+      ...prevState,
+      currentView: CurrentView.contacts,
+      contactID: inId,
+      contactName: inName,
+      contactEmail: inEmail,
+    }));
+  };
+
+  /**
+   * Show add contact modal
+   */
+  const showAddContact = function (): void {
+    setState((prevState) => ({
+      ...prevState,
+      currentView: CurrentView.contactAdd,
+    }));
   };
 
   /**
