@@ -1,4 +1,4 @@
-import createState from "../utils/state";
+import { createState, NewMailType } from "../utils/state";
 
 export default function BaseLayout() {
   const state = createState();
