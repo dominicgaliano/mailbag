@@ -69,27 +69,27 @@ export default function createState() {
    * @returns
    */
   const showMessage = function (inMessage: IMAP.IMessage): Promise<void> {
-    throw new Error("not implemented");
-    //   // show please wait modal
-    //   showHidePleaseWait(true);
+      // show please wait modal
+      showHidePleaseWait(true);
 
-    //   // get message content
-    //   const imapWorker: IMAP.Worker = new IMAP.Worker();
-    //   const messageBody: string = imapWorker
-    //     .getBody
-    //     // TODO: fill function body
-    //     ();
+      // get message content
+      const imapWorker: IMAP.Worker = new IMAP.Worker();
+      const messageBody: string = imapWorker.getMessageBody(inMessage.id, state.currentMailbox!.path);
 
-    //   // hide please wait modal
-    //   setState((prevState) => ({
-    //     ...prevState,
-    //     messageID: inMessage.id,
-    //     messageDate: inMessage.date,
-    //     messageFrom: inMessage.from,
-    //     messageTo: inMessage.to,
-    //     messageSubject: inMessage.subject,
-    //     messageBody: messageBody,
-    //   }));
+      // hide please wait modal
+      showHidePleaseWait(false);
+
+      // add message content to state
+      setState((prevState) => ({
+        ...prevState,
+        currentView: 
+        messageID: inMessage.id,
+        messageDate: inMessage.date,
+        messageFrom: inMessage.from,
+        messageTo: inMessage.to,
+        messageSubject: inMessage.subject,
+        messageBody: messageBody,
+      }));
   };
 
   const showComposeMessage = function () {
