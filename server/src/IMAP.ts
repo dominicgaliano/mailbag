@@ -11,7 +11,7 @@ export interface IMessage {
   id: string;
   date: string;
   from: string;
-  to: string;
+  subject: string;
   body?: string;
 }
 
