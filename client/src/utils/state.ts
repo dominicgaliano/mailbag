@@ -68,28 +68,31 @@ export default function createState() {
    * @param inMessage
    * @returns
    */
-  const showMessage = function (inMessage: IMAP.IMessage): Promise<void> {
-      // show please wait modal
-      showHidePleaseWait(true);
+  const showMessage = async function (inMessage: IMAP.IMessage): Promise<void> {
+    // show please wait modal
+    showHidePleaseWait(true);
 
-      // get message content
-      const imapWorker: IMAP.Worker = new IMAP.Worker();
-      const messageBody: string = imapWorker.getMessageBody(inMessage.id, state.currentMailbox!.path);
+    // get message content
+    const imapWorker: IMAP.Worker = new IMAP.Worker();
+    const messageBody: string = await imapWorker.getMessageBody(
+      inMessage.id,
+      state.currentMailbox!.path
+    );
 
-      // hide please wait modal
-      showHidePleaseWait(false);
+    // hide please wait modal
+    showHidePleaseWait(false);
 
-      // add message content to state
-      setState((prevState) => ({
-        ...prevState,
-        currentView: 
-        messageID: inMessage.id,
-        messageDate: inMessage.date,
-        messageFrom: inMessage.from,
-        messageTo: inMessage.to,
-        messageSubject: inMessage.subject,
-        messageBody: messageBody,
-      }));
+    // add message content to state
+    setState((prevState) => ({
+      ...prevState,
+      currentView: CurrentView.message,
+      messageID: inMessage.id,
+      messageDate: inMessage.date,
+      messageFrom: inMessage.from,
+      messageTo: "",
+      messageSubject: inMessage.subject,
+      messageBody: messageBody,
+    }));
   };
 
   const showComposeMessage = function () {
