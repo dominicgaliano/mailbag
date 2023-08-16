@@ -1,11 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { config } from "./config";
 
-interface ICallOptions {
-  mailbox: string;
-  id?: number;
-}
-
 interface IMessage {
   id: string;
   date: string;
