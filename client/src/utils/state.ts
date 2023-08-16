@@ -5,13 +5,39 @@ import { config } from "./config";
 import * as IMAP from "./IMAP";
 import * as SMTP from "./SMTP";
 
+enum CurrentView {
+  welcome,
+  message,
+  compose,
+  contacts,
+  contactAdd,
+}
+
+type State = {
+  pleaseWaitVisible: boolean;
+  contacts: Contacts.IContact[];
+  mailboxes: IMAP.IMailbox[];
+  messages: IMAP.IMessage[];
+  currentView: CurrentView;
+  currentMailbox: IMAP.IMailbox | null;
+  messageID: string | null;
+  messageDate: string | null;
+  messageFrom: string | null;
+  messageTo: string | null;
+  messageSubject: string | null;
+  messageBody: string | null;
+  contactID: string | null;
+  contactName: string | null;
+  contactEmail: string | null;
+};
+
 export default function createState() {
-  const [state, setState] = useState({
+  const [state, setState] = useState<State>({
     pleaseWaitVisible: false,
     contacts: [],
     mailboxes: [],
     messages: [],
-    currentView: "welcome",
+    currentView: CurrentView.welcome,
     currentMailbox: null,
     messageID: null,
     messageDate: null,

@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { config } from "./config";
 
-interface IMessage {
+export interface IMessage {
   id: string;
   date: string;
   from: string;
@@ -9,7 +9,7 @@ interface IMessage {
   body?: string;
 }
 
-interface IMailbox {
+export interface IMailbox {
   name: string;
   path: string;
 }
