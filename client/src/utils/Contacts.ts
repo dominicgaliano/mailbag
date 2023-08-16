@@ -38,13 +38,10 @@ export class Worker {
    * Deletes a contact
    *
    * @param inId The ID of the contact to delete
-   * @returns A promise that eventually resolves to any
+   * @returns A promise that eventually resolves to void
    */
-  public async deleteContact(inId: string): Promise<any> {
-    const response: AxiosResponse = await axios.delete(
-      `${config.serverAddress}/contacts/${inId}`
-    );
-    return response.data;
+  public async deleteContact(inId: string): Promise<void> {
+    await axios.delete(`${config.serverAddress}/contacts/${inId}`);
   }
 
   public async updateContact(

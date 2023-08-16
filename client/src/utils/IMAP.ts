@@ -65,9 +65,6 @@ export class Worker {
    * @returns a promise that resolves to void
    */
   public async deleteMessage(inId: string, inMailbox: string): Promise<void> {
-    const response: AxiosResponse = await axios.delete(
-      `${config.serverAddress}/messages/${inMailbox}/${inId}`
-    );
-    return response.data;
+    await axios.delete(`${config.serverAddress}/messages/${inMailbox}/${inId}`);
   }
 }
