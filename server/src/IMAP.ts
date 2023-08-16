@@ -96,7 +96,6 @@ export class Worker {
       return {
         id: inValue.uid,
         date: inValue.envelope.date,
-        to: inValue.envelope.to[0].address,
         from: inValue.envelope.from[0].address,
         subject: inValue.envelope.subject,
       };
