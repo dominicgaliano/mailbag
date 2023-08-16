@@ -13,6 +13,12 @@ enum CurrentView {
   contactAdd,
 }
 
+export enum NewMailType {
+  new,
+  reply,
+  contact,
+}
+
 type State = {
   pleaseWaitVisible: boolean;
   contacts: Contacts.IContact[];
@@ -31,7 +37,7 @@ type State = {
   contactEmail: string | null;
 };
 
-export default function createState() {
+export function createState() {
   const [state, setState] = useState<State>({
     pleaseWaitVisible: false,
     contacts: [],
@@ -95,8 +101,40 @@ export default function createState() {
     }));
   };
 
-  const showComposeMessage = function () {
-    throw new Error("Not implemented");
+  const showComposeMessage = function (inType: NewMailType) {
+    setState((prevState) => {
+      switch (inType) {
+        case NewMailType.new:
+          return {
+            ...prevState,
+            currentView: CurrentView.compose,
+            messageTo: "",
+            messageSubject: "",
+            messageBody: "",
+            messageFrom: config.userEmail,
+          };
+
+        case NewMailType.reply:
+          return {
+            ...prevState,
+            currentView: CurrentView.compose,
+            messageTo: prevState.messageFrom,
+            messageSubject: `RE: ${prevState.messageSubject}`,
+            messageBody: `\n\n---- Original Message ----\n\n${prevState.messageBody}`,
+            messageFrom: config.userEmail,
+          };
+
+        case NewMailType.contact:
+          return {
+            ...prevState,
+            currentView: CurrentView.compose,
+            messageTo: prevState.contactEmail,
+            messageSubject: "",
+            messageBody: "",
+            messageFrom: config.userEmail,
+          };
+      }
+    });
   };
 
   /**
