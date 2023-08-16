@@ -15,6 +15,11 @@ interface IMailbox {
 }
 
 export class Worker {
+  /**
+   * List mailboxes
+   *
+   * @returns A promise that resolves to an array of mailboxes
+   */
   public async listMailboxes(): Promise<IMailbox[]> {
     const response: AxiosResponse = await axios.get(
       `${config.serverAddress}/mailboxes`
@@ -22,6 +27,12 @@ export class Worker {
     return response.data;
   }
 
+  /**
+   * List messages
+   *
+   * @param inMailbox mailbox path to list messages from
+   * @returns a promise that resolves to an array of messages
+   */
   public async listMessages(inMailbox: string): Promise<IMessage[]> {
     const response: AxiosResponse = await axios.get(
       `${config.serverAddress}/mailboxes/${inMailbox}`
@@ -29,6 +40,13 @@ export class Worker {
     return response.data;
   }
 
+  /**
+   * Get message body
+   *
+   * @param inId message id to get body from
+   * @param inMailbox mailbox path to get message body from
+   * @returns a promise that resolves to a string of the message body
+   */
   public async getMessageBody(
     inId: string,
     inMailbox: string
@@ -39,6 +57,13 @@ export class Worker {
     return response.data;
   }
 
+  /**
+   * Delete message
+   *
+   * @param inId message id to delete
+   * @param inMailbox mailbox path to get message body from
+   * @returns a promise that resolves to void
+   */
   public async deleteMessage(inId: string, inMailbox: string): Promise<void> {
     const response: AxiosResponse = await axios.delete(
       `${config.serverAddress}/messages/${inMailbox}/${inId}`
