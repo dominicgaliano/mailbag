@@ -74,7 +74,7 @@ export default function createState() {
     showHidePleaseWait(true);
 
     // get message content
-    imapWorker: IMAP.Worker = new IMAP.Worker();
+    const imapWorker: IMAP.Worker = new IMAP.Worker();
     const messageBody: string = imapWorker
       .getBody
       // TODO: fill function body
