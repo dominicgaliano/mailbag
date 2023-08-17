@@ -1,5 +1,9 @@
 import { State } from "../utils/state";
 
-export default function ContactView(state: State) {
+type Props = {
+  state: State;
+};
+
+export default function ContactView({ state }: Props) {
   return <>ContactView</>;
 }

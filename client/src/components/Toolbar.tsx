@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import { State } from "../utils/state";
 
 type Props = {

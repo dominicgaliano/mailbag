@@ -1,5 +1,9 @@
 import { State } from "../utils/state";
 
-export default function MessageView(state: State) {
+type Props = {
+  state: State;
+};
+
+export default function MessageView({ state }: Props) {
   return <>MessageView</>;
 }

@@ -5,7 +5,7 @@ import { config } from "./config";
 import * as IMAP from "./IMAP";
 import * as SMTP from "./SMTP";
 
-enum CurrentView {
+export enum CurrentView {
   welcome,
   message,
   compose,

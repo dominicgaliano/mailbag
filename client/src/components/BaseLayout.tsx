@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { createState, NewMailType } from "../utils/state";
+import { createState, NewMailType, CurrentView } from "../utils/state";
 import {
   Dialog,
   DialogTitle,
@@ -8,6 +8,10 @@ import {
 } from "@mui/material";
 import Toolbar from "./Toolbar";
 import MailboxList from "./MailboxList";
+import MessageList from "./MessageList";
+import WelcomeView from "./WelcomeView";
+import MessageView from "./MessageView";
+import ContactView from "./ContactView";
 
 export default function BaseLayout() {
   const state = createState();
@@ -29,6 +33,23 @@ export default function BaseLayout() {
       </div>
       <div className="mailbox-list">
         <MailboxList state={state} />
+      </div>
+      <div className="center-area">
+        <div className="message-list">
+          <MessageList state={state} />
+        </div>
+        <div className="center-area__view">
+          {state.currentView === CurrentView.welcome && <WelcomeView />}
+          {(state.currentView === CurrentView.message ||
+            state.currentView === CurrentView.compose) && (
+            <MessageView state={state} />
+          )}
+          {(state.currentView === CurrentView.contacts ||
+            state.currentView === CurrentView.contactAdd) && (
+            <ContactView state={state} />
+          )}
+          {}
+        </div>
       </div>
     </div>
   );
