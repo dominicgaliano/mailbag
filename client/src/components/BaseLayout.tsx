@@ -7,6 +7,7 @@ import {
   DialogContentText,
 } from "@mui/material";
 import Toolbar from "./Toolbar";
+import MailboxList from "./MailboxList";
 
 export default function BaseLayout() {
   const state = createState();
@@ -25,6 +26,9 @@ export default function BaseLayout() {
       </Dialog>
       <div className="toolbar">
         <Toolbar state={state} />
+      </div>
+      <div className="mailbox-list">
+        <MailboxList state={state} />
       </div>
     </div>
   );

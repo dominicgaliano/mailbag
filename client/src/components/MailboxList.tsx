@@ -1,5 +1,9 @@
 import { State } from "../utils/state";
 
-export default function MailboxList(state: State) {
+type Props = {
+  state: State;
+};
+
+export default function MailboxList({ state }: Props) {
   return <>MailboxList</>;
 }
