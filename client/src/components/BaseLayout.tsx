@@ -12,6 +12,7 @@ import MessageList from "./MessageList";
 import WelcomeView from "./WelcomeView";
 import MessageView from "./MessageView";
 import ContactView from "./ContactView";
+import ContactList from "./ContactList";
 
 export default function BaseLayout() {
   const state = createState();
@@ -50,6 +51,9 @@ export default function BaseLayout() {
           )}
           {}
         </div>
+      </div>
+      <div className="contacts-list">
+        <ContactList state={state} />
       </div>
     </div>
   );

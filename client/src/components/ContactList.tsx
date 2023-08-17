@@ -1,5 +1,9 @@
 import { State } from "../utils/state";
 
-export default function ContactList(state: State) {
+type Props = {
+  state: State;
+};
+
+export default function ContactList({ state }: Props) {
   return <>ContactList</>;
 }
