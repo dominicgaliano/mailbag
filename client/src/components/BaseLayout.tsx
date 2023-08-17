@@ -17,7 +17,7 @@ export default function BaseLayout() {
   // }, []);
 
   return (
-    <div className="appContainer">
+    <div className="app-container">
       <Dialog open={state.pleaseWaitVisible} transitionDuration={0}>
         <DialogTitle style={{ textAlign: "center" }}>Please Wait</DialogTitle>
         <DialogContent>
