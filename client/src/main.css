@@ -3,5 +3,10 @@
   grid-template-columns: 150px 1fr 240px;
   grid-template-rows: 50px 1fr;
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
+}
+
+.toolbar {
+  grid-column: 1 / 4;
+  grid-row: 1 / 1;
 }

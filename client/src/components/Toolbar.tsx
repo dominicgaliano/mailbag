@@ -1,5 +1,10 @@
+import { FunctionComponent } from "react";
 import { State } from "../utils/state";
 
-export default function Toolbar(state: State) {
+type Props = {
+  state: State;
+};
+
+export default function Toolbar({ state }: Props) {
   return <>Toolbar</>;
 }
