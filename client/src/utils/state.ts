@@ -19,7 +19,7 @@ export enum NewMailType {
   contact,
 }
 
-type State = {
+export type State = {
   pleaseWaitVisible: boolean;
   contacts: Contacts.IContact[];
   mailboxes: IMAP.IMailbox[];

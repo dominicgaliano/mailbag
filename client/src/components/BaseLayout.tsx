@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
+import Toolbar from "./Toolbar";
 
 export default function BaseLayout() {
   const state = createState();
@@ -22,6 +23,9 @@ export default function BaseLayout() {
           <DialogContentText>...Contacting Server...</DialogContentText>
         </DialogContent>
       </Dialog>
+      <div className="toolbar">
+        <Toolbar state={state} />
+      </div>
     </div>
   );
 }
