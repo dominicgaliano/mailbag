@@ -137,6 +137,8 @@ export function createState() {
     }));
   };
 
+  /* STATE CHANGER FUNCTIONS */
+
   /**
    * Add mailbox to list
    * @param inMailbox mailbox to add
@@ -155,6 +157,8 @@ export function createState() {
       currentMailbox: inMailbox,
     }));
   };
+
+  /* API CALLING FUNCTIONS */
 
   return {
     ...state,
