@@ -28,4 +28,5 @@ export type StateMethods = {
   showComposeMessage: (inType: NewMailType) => void;
   showContact: (inId: string, inName: string, inEmail: string) => void;
   showAddContact: () => void;
+  setCurrentMailbox: (inMailbox: IMAP.IMailbox) => void;
 };

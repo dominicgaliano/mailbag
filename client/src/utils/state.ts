@@ -148,6 +148,14 @@ export function createState() {
     }));
   };
 
+  const setCurrentMailbox = function (inMailbox: IMAP.IMailbox): void {
+    setState((prevState) => ({
+      ...prevState,
+      currentView: CurrentView.welcome,
+      currentMailbox: inMailbox,
+    }));
+  };
+
   return {
     ...state,
     showHidePleaseWait,
@@ -156,6 +164,7 @@ export function createState() {
     showComposeMessage,
     showContact,
     showAddContact,
+    setCurrentMailbox,
   };
 }
 
