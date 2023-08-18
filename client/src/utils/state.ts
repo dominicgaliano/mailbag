@@ -165,6 +165,8 @@ export function createState() {
       currentView: CurrentView.welcome,
       currentMailbox: inMailbox,
     }));
+
+    getMessages(inMailbox);
   };
 
   /* API CALLING FUNCTIONS */
@@ -188,6 +190,33 @@ export function createState() {
         });
       }
       getContacts().then(() => showHidePleaseWait(false));
+    });
+  };
+
+  const getMessages = async function (inMailbox: IMAP.IMailbox): Promise<void> {
+    showHidePleaseWait(true);
+
+    const imapWorker: IMAP.Worker = new IMAP.Worker();
+    const messages: IMAP.IMessage[] = await imapWorker.listMessages(
+      inMailbox.path
+    );
+
+    //FIXME: remove after debug
+    console.log(messages);
+
+    showHidePleaseWait(false);
+
+    // clear previous messages
+    setState((prevState) => ({
+      ...prevState,
+      messages: [],
+    }));
+
+    messages.forEach((inMessage) => {
+      setState((prevState) => ({
+        ...prevState,
+        messages: [...prevState.messages, inMessage],
+      }));
     });
   };
 
