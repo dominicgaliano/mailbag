@@ -30,4 +30,5 @@ export type StateMethods = {
   showContact: (inId: string, inName: string, inEmail: string) => void;
   showAddContact: () => void;
   setCurrentMailbox: (inMailbox: IMAP.IMailbox) => void;
+  fetchInitialData: () => void;
 };

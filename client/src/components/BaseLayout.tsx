@@ -26,25 +26,7 @@ export default function BaseLayout() {
   useEffect(() => {
     if (!didInit) {
       didInit = true;
-      state.showHidePleaseWait(true);
-      async function getMailboxes() {
-        const imapWorker: IMAP.Worker = new IMAP.Worker();
-        const mailboxes: IMAP.IMailbox[] = await imapWorker.listMailboxes();
-        mailboxes.forEach((inMailbox) => {
-          state.addMailboxToList(inMailbox);
-        });
-      }
-      getMailboxes().then(function () {
-        async function getContacts() {
-          const contactsWorker: Contacts.Worker = new Contacts.Worker();
-          const contacts: Contacts.IContact[] =
-            await contactsWorker.listContacts();
-          contacts.forEach((inContact) => {
-            state.addContactToList(inContact);
-          });
-        }
-        getContacts().then(() => state.showHidePleaseWait(false));
-      });
+      state.fetchInitialData();
     }
   }, []);
 

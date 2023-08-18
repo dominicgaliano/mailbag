@@ -168,10 +168,27 @@ export function createState() {
   };
 
   /* API CALLING FUNCTIONS */
-  const getMailboxes = function (): void {
-    setState((prevState) => ({
-      ...prevState,
-    }));
+  const fetchInitialData = function (): void {
+    // TODO: add error handling
+    showHidePleaseWait(true);
+    async function getMailboxes() {
+      const imapWorker: IMAP.Worker = new IMAP.Worker();
+      const mailboxes: IMAP.IMailbox[] = await imapWorker.listMailboxes();
+      mailboxes.forEach((inMailbox) => {
+        addMailboxToList(inMailbox);
+      });
+    }
+    getMailboxes().then(function () {
+      async function getContacts() {
+        const contactsWorker: Contacts.Worker = new Contacts.Worker();
+        const contacts: Contacts.IContact[] =
+          await contactsWorker.listContacts();
+        contacts.forEach((inContact) => {
+          addContactToList(inContact);
+        });
+      }
+      getContacts().then(() => showHidePleaseWait(false));
+    });
   };
 
   return {
@@ -184,6 +201,7 @@ export function createState() {
     showContact,
     showAddContact,
     setCurrentMailbox,
+    fetchInitialData,
   };
 }
 
