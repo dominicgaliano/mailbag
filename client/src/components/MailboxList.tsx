@@ -17,6 +17,7 @@ export default function MailboxList({ state }: Props) {
             }}
             style={{ width: 128, marginBottom: 10 }}
             color={state.currentMailbox === mailbox ? "secondary" : "primary"}
+            key={mailbox.path}
           />
         );
       })}

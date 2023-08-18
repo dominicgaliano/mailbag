@@ -150,6 +150,15 @@ export function createState() {
     }));
   };
 
+  const addContactToList = function (inContact: Contacts.IContact): void {
+    setState((prevState) => ({
+      ...prevState,
+      contacts: [...prevState.contacts, inContact],
+    }));
+  };
+
+  /* EVENT HANDLER FUNCTIONS */
+
   const setCurrentMailbox = function (inMailbox: IMAP.IMailbox): void {
     setState((prevState) => ({
       ...prevState,
@@ -159,11 +168,17 @@ export function createState() {
   };
 
   /* API CALLING FUNCTIONS */
+  const getMailboxes = function (): void {
+    setState((prevState) => ({
+      ...prevState,
+    }));
+  };
 
   return {
     ...state,
     showHidePleaseWait,
     addMailboxToList,
+    addContactToList,
     showMessage,
     showComposeMessage,
     showContact,
