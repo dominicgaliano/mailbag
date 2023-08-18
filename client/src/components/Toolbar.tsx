@@ -1,5 +1,6 @@
 import { State } from "../utils/state";
 import { Button } from "@mui/material";
+import { NewMailType } from "../utils/state";
 
 type Props = {
   state: State;
@@ -14,7 +15,7 @@ export default function Toolbar({ state }: Props) {
         size="small"
         style={{ marginRight: 10 }}
         onClick={() => {
-          state.showMessage();
+          state.showComposeMessage(NewMailType.new);
         }}
       >
         New Message

@@ -23,9 +23,9 @@ export type StateProperties = {
 
 export type StateMethods = {
   showHidePleaseWait: (inVisible: boolean) => void;
-  addMailboxToList: () => void;
+  addMailboxToList: (inMailbox: IMAP.IMailbox) => void;
   showMessage: (inMessage: IMAP.IMessage) => void;
   showComposeMessage: (inType: NewMailType) => void;
   showContact: (inId: string, inName: string, inEmail: string) => void;
-  showAddContact: (inMailbox: IMAP.IMailbox) => void;
+  showAddContact: () => void;
 };

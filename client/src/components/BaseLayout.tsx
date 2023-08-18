@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { createState, NewMailType, CurrentView } from "../utils/state";
+import { createState, CurrentView } from "../utils/state";
 import {
   Dialog,
   DialogTitle,
