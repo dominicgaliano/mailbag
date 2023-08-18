@@ -1,6 +1,7 @@
 import * as Contacts from "../utils/Contacts";
 import * as IMAP from "../utils/IMAP";
 import * as SMTP from "../utils/SMTP";
+import { CurrentView, NewMailType } from "../utils/state";
 
 export type StateProperties = {
   pleaseWaitVisible: boolean;
@@ -28,17 +29,3 @@ export type StateMethods = {
   showContact: (inId: string, inName: string, inEmail: string) => void;
   showAddContact: (inMailbox: IMAP.IMailbox) => void;
 };
-
-export enum CurrentView {
-  welcome,
-  message,
-  compose,
-  contacts,
-  contactAdd,
-}
-
-export enum NewMailType {
-  new,
-  reply,
-  contact,
-}

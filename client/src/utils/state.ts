@@ -5,14 +5,7 @@ import { config } from "./config";
 import * as IMAP from "./IMAP";
 import * as SMTP from "./SMTP";
 
-import {
-  type StateProperties,
-  type StateMethods,
-  CurrentView,
-  NewMailType,
-} from "../types";
-
-export type State = StateProperties & StateMethods;
+import { type StateProperties, type StateMethods } from "../types";
 
 export function createState() {
   const [state, setState] = useState<StateProperties>({
@@ -165,3 +158,19 @@ export function createState() {
     showAddContact,
   };
 }
+
+export enum CurrentView {
+  welcome,
+  message,
+  compose,
+  contacts,
+  contactAdd,
+}
+
+export enum NewMailType {
+  new,
+  reply,
+  contact,
+}
+
+export type State = StateProperties & StateMethods;
