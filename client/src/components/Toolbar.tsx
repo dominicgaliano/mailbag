@@ -14,7 +14,7 @@ export default function Toolbar({ state }: Props) {
         size="small"
         style={{ marginRight: 10 }}
         onClick={() => {
-          // TODO: Implement, need to implement more state methods
+          state.showMessage();
         }}
       >
         New Message
@@ -25,7 +25,7 @@ export default function Toolbar({ state }: Props) {
         size="small"
         style={{ marginRight: 10 }}
         onClick={() => {
-          // TODO: Implement, need to implement more state methods
+          state.showAddContact();
         }}
       >
         New Contact
