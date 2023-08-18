@@ -17,30 +17,35 @@ import ContactList from "./ContactList";
 import * as Contacts from "../utils/Contacts";
 import * as IMAP from "../utils/IMAP";
 
+let didInit = false;
+
 export default function BaseLayout() {
   const state = createState();
 
   // Fetch user's mailboxes and contacts
   useEffect(() => {
-    state.showHidePleaseWait(true);
-    async function getMailboxes() {
-      const imapWorker: IMAP.Worker = new IMAP.Worker();
-      const mailboxes: IMAP.IMailbox[] = await imapWorker.listMailboxes();
-      mailboxes.forEach((inMailbox) => {
-        state.addMailboxToList(inMailbox);
-      });
-    }
-    getMailboxes().then(function () {
-      async function getContacts() {
-        const contactsWorker: Contacts.Worker = new Contacts.Worker();
-        const contacts: Contacts.IContact[] =
-          await contactsWorker.listContacts();
-        contacts.forEach((inContact) => {
-          state.addContactToList(inContact);
+    if (!didInit) {
+      didInit = true;
+      state.showHidePleaseWait(true);
+      async function getMailboxes() {
+        const imapWorker: IMAP.Worker = new IMAP.Worker();
+        const mailboxes: IMAP.IMailbox[] = await imapWorker.listMailboxes();
+        mailboxes.forEach((inMailbox) => {
+          state.addMailboxToList(inMailbox);
         });
       }
-      getContacts().then(() => state.showHidePleaseWait(false));
-    });
+      getMailboxes().then(function () {
+        async function getContacts() {
+          const contactsWorker: Contacts.Worker = new Contacts.Worker();
+          const contacts: Contacts.IContact[] =
+            await contactsWorker.listContacts();
+          contacts.forEach((inContact) => {
+            state.addContactToList(inContact);
+          });
+        }
+        getContacts().then(() => state.showHidePleaseWait(false));
+      });
+    }
   }, []);
 
   return (
