@@ -1,6 +1,8 @@
 import { State } from "../utils/state";
 import { Button } from "@mui/material";
 import { NewMailType } from "../utils/state";
+import EmailIcon from "@mui/icons-material/Email";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 type Props = {
   state: State;
@@ -18,6 +20,7 @@ export default function Toolbar({ state }: Props) {
           state.showComposeMessage(NewMailType.new);
         }}
       >
+        <EmailIcon style={{ marginRight: 10 }} />
         New Message
       </Button>
       <Button
@@ -29,6 +32,7 @@ export default function Toolbar({ state }: Props) {
           state.showAddContact();
         }}
       >
+        <PersonAddIcon style={{ marginRight: 10 }} />
         New Contact
       </Button>
     </>
