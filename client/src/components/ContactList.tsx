@@ -1,5 +1,11 @@
 import { State } from "../utils/state";
-import { List, Chip } from "@mui/material";
+import {
+  List,
+  ListItemButton,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+} from "@mui/material";
 
 type Props = {
   state: State;
@@ -10,16 +16,17 @@ export default function ContactList({ state }: Props) {
     <List>
       {state.contacts.map((contact) => {
         return (
-          <Chip
-            label={`${contact.name}`}
+          <ListItemButton
+            key={`${contact}`}
             onClick={() => {
-              // TODO: Implement me
-              console.log("Not implemented");
+              state.showContact(contact._id!, contact.name, contact.email);
             }}
-            style={{ width: 128, marginBottom: 10 }}
-            color="primary"
-            key={contact._id}
-          />
+          >
+            <ListItemAvatar>
+              <Avatar />
+            </ListItemAvatar>
+            <ListItemText primary={contact.name} />
+          </ListItemButton>
         );
       })}
     </List>
