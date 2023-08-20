@@ -212,6 +212,7 @@ export function createState() {
   };
 
   const getMessages = async function (inMailbox: IMAP.IMailbox): Promise<void> {
+    // TODO: add error handling
     showHidePleaseWait(true);
 
     const imapWorker: IMAP.Worker = new IMAP.Worker();
@@ -239,6 +240,8 @@ export function createState() {
   };
 
   const saveContact = async function (): Promise<void> {
+    // TODO: add error handling
+
     // check that name and email are filled
     if (!state.contactName || !state.contactEmail) {
       alert("Missing necessary field");
@@ -262,23 +265,31 @@ export function createState() {
       ...prevState,
       contacts: cl,
     }));
+
+    // TODO: maybe transition to contact view of new contact after successful save
   };
 
   const deleteContact = async function (): Promise<void> {
+    // TODO: add error handling
+
     // call api to add contact
     showHidePleaseWait(true);
     const contactsWorker: Contacts.Worker = new Contacts.Worker();
     await contactsWorker.deleteContact(state.contactID!);
     showHidePleaseWait(false);
 
+    const newContacts = state.contacts.filter((contact) => {
+      return contact._id! !== state.contactID;
+    });
+
+    console.log(newContacts);
+
     setState((prevState) => ({
       ...prevState,
       contactName: null,
       contactEmail: null,
       contactID: null,
-      contacts: prevState.contacts.filter((contact) => {
-        contact._id !== prevState.contactID;
-      }),
+      contacts: newContacts,
     }));
 
     console.log(state);
