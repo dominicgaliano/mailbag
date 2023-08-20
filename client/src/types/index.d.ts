@@ -33,4 +33,5 @@ export type StateMethods = {
   fetchInitialData: () => void;
   handleFieldChange: (inEvent: any) => void;
   saveContact: () => Promise<void>;
+  deleteContact: () => Promise<void>;
 };

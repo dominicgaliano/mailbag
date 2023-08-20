@@ -133,7 +133,7 @@ export function createState() {
   const showAddContact = function (): void {
     setState((prevState) => ({
       ...prevState,
-      contactId: null,
+      contactID: null,
       contactName: null,
       contactEmail: null,
       currentView: CurrentView.contactAdd,
@@ -264,6 +264,26 @@ export function createState() {
     }));
   };
 
+  const deleteContact = async function (): Promise<void> {
+    // call api to add contact
+    showHidePleaseWait(true);
+    const contactsWorker: Contacts.Worker = new Contacts.Worker();
+    await contactsWorker.deleteContact(state.contactID!);
+    showHidePleaseWait(false);
+
+    setState((prevState) => ({
+      ...prevState,
+      contactName: null,
+      contactEmail: null,
+      contactID: null,
+      contacts: prevState.contacts.filter((contact) => {
+        contact._id !== prevState.contactID;
+      }),
+    }));
+
+    console.log(state);
+  };
+
   return {
     ...state,
     showHidePleaseWait,
@@ -277,6 +297,7 @@ export function createState() {
     fetchInitialData,
     handleFieldChange,
     saveContact,
+    deleteContact,
   };
 }
 

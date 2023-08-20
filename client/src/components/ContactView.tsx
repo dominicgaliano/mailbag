@@ -1,4 +1,4 @@
-import { State, CurrentView } from "../utils/state";
+import { State, CurrentView, NewMailType } from "../utils/state";
 import { TextField, Button } from "@mui/material";
 
 type Props = {
@@ -41,6 +41,41 @@ export default function ContactView({ state }: Props) {
           onClick={state.saveContact}
         >
           Save
+        </Button>
+      )}
+      {state.currentView === CurrentView.contacts && (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginTop: 10, marginRight: 10 }}
+          onClick={() => {
+            alert("Not implemented");
+          }}
+        >
+          Edit
+        </Button>
+      )}
+      {state.currentView === CurrentView.contacts && (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginTop: 10, marginRight: 10 }}
+          onClick={state.deleteContact}
+        >
+          Delete
+        </Button>
+      )}
+      {state.currentView === CurrentView.contacts && (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginTop: 10 }}
+          onClick={() => state.showComposeMessage(NewMailType.contact)}
+        >
+          Send Email
         </Button>
       )}
     </form>
