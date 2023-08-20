@@ -133,6 +133,9 @@ export function createState() {
   const showAddContact = function (): void {
     setState((prevState) => ({
       ...prevState,
+      contactId: null,
+      contactName: null,
+      contactEmail: null,
       currentView: CurrentView.contactAdd,
     }));
   };
@@ -167,6 +170,21 @@ export function createState() {
     }));
 
     getMessages(inMailbox);
+  };
+
+  const handleFieldChange = function (inEvent: any): void {
+    // limit contact name to 25 chars
+    if (
+      inEvent.target.id === "contactName" &&
+      inEvent.target.value.length > 25
+    ) {
+      return;
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      [inEvent.target.id]: inEvent.target.value,
+    }));
   };
 
   /* API CALLING FUNCTIONS */
@@ -220,6 +238,32 @@ export function createState() {
     });
   };
 
+  const saveContact = async function (): Promise<void> {
+    // check that name and email are filled
+    if (!state.contactName || !state.contactEmail) {
+      alert("Missing necessary field");
+      return;
+    }
+
+    // copy current contacts list
+    const cl = state.contacts.slice(0);
+
+    // call api to add contact
+    showHidePleaseWait(true);
+    const contactsWorker: Contacts.Worker = new Contacts.Worker();
+    const newContact: Contacts.IContact = await contactsWorker.addContact({
+      name: state.contactName!,
+      email: state.contactEmail!,
+    });
+    showHidePleaseWait(false);
+
+    cl.push(newContact);
+    setState((prevState) => ({
+      ...prevState,
+      contacts: cl,
+    }));
+  };
+
   return {
     ...state,
     showHidePleaseWait,
@@ -231,6 +275,8 @@ export function createState() {
     showAddContact,
     setCurrentMailbox,
     fetchInitialData,
+    handleFieldChange,
+    saveContact,
   };
 }
 

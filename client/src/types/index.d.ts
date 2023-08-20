@@ -31,4 +31,6 @@ export type StateMethods = {
   showAddContact: () => void;
   setCurrentMailbox: (inMailbox: IMAP.IMailbox) => void;
   fetchInitialData: () => void;
+  handleFieldChange: (inEvent: any) => void;
+  saveContact: () => Promise<void>;
 };

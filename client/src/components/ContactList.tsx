@@ -17,7 +17,7 @@ export default function ContactList({ state }: Props) {
       {state.contacts.map((contact) => {
         return (
           <ListItemButton
-            key={`${contact}`}
+            key={`${contact._id}`}
             onClick={() => {
               state.showContact(contact._id!, contact.name, contact.email);
             }}
