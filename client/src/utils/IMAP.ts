@@ -52,7 +52,7 @@ export class Worker {
     inMailbox: string
   ): Promise<string> {
     const response: AxiosResponse = await axios.get(
-      `${config.serverAddress}/messages/${inId}/${inMailbox}`
+      `${config.serverAddress}/messages/${inMailbox}/${inId}`
     );
     return response.data;
   }
