@@ -34,4 +34,5 @@ export type StateMethods = {
   handleFieldChange: (inEvent: any) => void;
   saveContact: () => Promise<void>;
   deleteContact: () => Promise<void>;
+  sendMessage: () => Promise<void>;
 };

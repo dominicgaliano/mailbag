@@ -296,6 +296,40 @@ export function createState() {
     console.log(state);
   };
 
+  const sendMessage = async function (): Promise<void> {
+    // check for required fields
+    if (
+      !state.messageTo ||
+      !state.messageFrom ||
+      !state.messageSubject ||
+      !state.messageBody
+    ) {
+      alert("Missing one or more required fields.");
+      return;
+    }
+
+    showHidePleaseWait(true);
+
+    try {
+      const smtpWorker: SMTP.Worker = new SMTP.Worker();
+      await smtpWorker.sendMessage(
+        state.messageTo!,
+        state.messageFrom!,
+        state.messageSubject!,
+        state.messageBody!
+      );
+
+      setState((prevState) => ({
+        ...prevState,
+        currentView: CurrentView.welcome,
+      }));
+    } catch (err) {
+      alert("Message was unable to be sent, try again later.");
+    }
+
+    showHidePleaseWait(false);
+  };
+
   return {
     ...state,
     showHidePleaseWait,
@@ -310,6 +344,7 @@ export function createState() {
     handleFieldChange,
     saveContact,
     deleteContact,
+    sendMessage,
   };
 }
 
