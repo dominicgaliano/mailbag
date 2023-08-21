@@ -49,26 +49,30 @@ export function createState() {
     showHidePleaseWait(true);
 
     // get message content
-    const imapWorker: IMAP.Worker = new IMAP.Worker();
-    const messageBody: string = await imapWorker.getMessageBody(
-      inMessage.id,
-      state.currentMailbox!.path
-    );
+    try {
+      const imapWorker: IMAP.Worker = new IMAP.Worker();
+      const messageBody: string = await imapWorker.getMessageBody(
+        inMessage.id,
+        state.currentMailbox!.path
+      );
+
+      // add message content to state
+      setState((prevState) => ({
+        ...prevState,
+        currentView: CurrentView.message,
+        messageID: inMessage.id,
+        messageDate: inMessage.date,
+        messageFrom: inMessage.from,
+        messageTo: "",
+        messageSubject: inMessage.subject,
+        messageBody: messageBody,
+      }));
+    } catch (err) {
+      alert(err);
+    }
 
     // hide please wait modal
     showHidePleaseWait(false);
-
-    // add message content to state
-    setState((prevState) => ({
-      ...prevState,
-      currentView: CurrentView.message,
-      messageID: inMessage.id,
-      messageDate: inMessage.date,
-      messageFrom: inMessage.from,
-      messageTo: "",
-      messageSubject: inMessage.subject,
-      messageBody: messageBody,
-    }));
   };
 
   const showComposeMessage = function (inType: NewMailType) {
@@ -219,9 +223,6 @@ export function createState() {
     const messages: IMAP.IMessage[] = await imapWorker.listMessages(
       inMailbox.path
     );
-
-    //FIXME: remove after debug
-    console.log(messages);
 
     showHidePleaseWait(false);
 

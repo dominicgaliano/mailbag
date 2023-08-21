@@ -5,5 +5,15 @@ type Props = {
 };
 
 export default function MessageList({ state }: Props) {
-  return <>MessageList</>;
+  return (
+    <ul>
+      {state.messages.map((message) => {
+        return (
+          <li key={message.id} onClick={() => state.showMessage(message)}>
+            {message.subject} From: {message.from}
+          </li>
+        );
+      })}
+    </ul>
+  );
 }
