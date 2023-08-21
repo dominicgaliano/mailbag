@@ -330,6 +330,30 @@ export function createState() {
     showHidePleaseWait(false);
   };
 
+  const deleteMessage = async function (): Promise<void> {
+    showHidePleaseWait(true);
+
+    try {
+      const imapWorker: IMAP.Worker = new IMAP.Worker();
+      await imapWorker.deleteMessage(
+        state.messageID!,
+        state.currentMailbox!.path
+      );
+
+      setState((prevState) => ({
+        ...prevState,
+        messages: prevState.messages.filter(
+          (message) => message.id !== prevState.messageID
+        ),
+        currentView: CurrentView.welcome,
+      }));
+    } catch (err) {
+      alert("Message was unable to be deleted, try again later.");
+    }
+
+    showHidePleaseWait(false);
+  };
+
   return {
     ...state,
     showHidePleaseWait,
@@ -345,6 +369,7 @@ export function createState() {
     saveContact,
     deleteContact,
     sendMessage,
+    deleteMessage,
   };
 }
 

@@ -35,4 +35,5 @@ export type StateMethods = {
   saveContact: () => Promise<void>;
   deleteContact: () => Promise<void>;
   sendMessage: () => Promise<void>;
+  deleteMessage: () => Promise<void>;
 };

@@ -1,4 +1,4 @@
-import { State, CurrentView } from "../utils/state";
+import { State, CurrentView, NewMailType } from "../utils/state";
 import { InputBase, TextField, Button } from "@mui/material";
 
 type Props = {
@@ -85,6 +85,28 @@ export default function MessageView({ state }: Props) {
           onClick={state.sendMessage}
         >
           Send
+        </Button>
+      )}
+      {state.currentView === CurrentView.message && (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginTop: 10, marginRight: 10 }}
+          onClick={() => state.showComposeMessage(NewMailType.reply)}
+        >
+          Reply
+        </Button>
+      )}
+      {state.currentView === CurrentView.message && (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginTop: 10, marginRight: 10 }}
+          onClick={state.deleteMessage}
+        >
+          Delete
         </Button>
       )}
     </form>

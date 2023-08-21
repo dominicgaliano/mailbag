@@ -3,5 +3,5 @@ export const config: {
   userEmail: string;
 } = {
   serverAddress: "http://localhost:5000",
-  userEmail: "myemail@example.org",
+  userEmail: "user@domain.com",
 };
